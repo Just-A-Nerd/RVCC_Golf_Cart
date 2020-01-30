@@ -1,62 +1,51 @@
-from gpiozero import LED
-from gpiozero import Motor
-import RPi.GPIO as GPIO
-from time import sleep
-import getch
+#from gpiozero import LED
+import pygame
+import * from pygame.locals
+
 import time
+from time import sleep
 
 forwardled = LED(3)
 leftled = LED(4)
 reverseled = LED(14)
 rightled = LED(15)
-headlights = LED(17)
-taillights = LED(18)
-motor1 = Motor(22,5)
 
-servoPIN = 14
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(servoPIN, GPIO.OUT)
+screen = pygame.display.set_mode((400, 300))
 
-p = GPIO.PWM(14, 50) # GPIO 14 for PWM with 50HZ
-p.start(7.5) # Initialization
-
-print('Please press a key to see its value')
-while 1:
+done = false
     
-        headlights.on()
-        taillights.on()
-        key = getch.getch()
-        if key == 'w':
+while not done: 
+	event = pygame.event.poll()
+	if event.type == pygame.QUIT:
+		print("keydown")
+	if event.type == pygame.KEYDOWN:
+		if event.key == pygame.K_w:
             forwardled.on()
-            sleep(1)
-            forwardled.off()
-            motor1.forward(1)
-            print('Forward')
-        if key == 'a':
+			print("w pressed")
+		if event.key == pygame.K_a:
             leftled.on()
-            sleep(1)
-            leftled.off()
-            p.ChangeDutyCycle(12.5)
-            print('Left')
-        if key == 's':
+			print("a pressed")
+		if event.key == pygame.K_s:
             reverseled.on()
-            sleep(1)
-            reverseled.off()
-            motor1.stop()
-            print('Reverse')
-        if key == 'd':
+			print("s pressed")
+		if event.key == pygame.K_d:
             rightled.on()
-            sleep(1)
+			print("d pressed")
+
+    if event.type == pygame.KEYUP:
+        if event.key == pygame.K_w:
+            forwardled.off()
+            print("w  released")
+        if event.key == pygame.K_a:
+            leftled.off()
+            print("a released")
+        if event.key == pygame.K_s:
+            reverseled.off()
+            print("s released")
+        if event.key == pygame.K_d:
             rightled.off()
-            p.ChangeDutyCycle(2.5)
-            print('Right')
-        if key == 'h':
-            headlights.on()
-            sleep(1)
-            headlights.off()
-        if key == 't':
-            taillights.on()
-            sleep(1)
-            taillights.off()
-            
-GPIO.cleanup()
+            print("d released")
+	
+
+	pygame.display.flip()
+	pygame.event.pump()
