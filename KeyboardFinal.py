@@ -1,6 +1,6 @@
-#from gpiozero import LED
+from gpiozero import LED
 import pygame
-import * from pygame.locals
+from pygame.locals import *
 
 import time
 from time import sleep
@@ -12,25 +12,26 @@ rightled = LED(15)
 
 screen = pygame.display.set_mode((400, 300))
 
-done = false
+done = False
     
 while not done: 
-	event = pygame.event.poll()
-	if event.type == pygame.QUIT:
-		print("keydown")
-	if event.type == pygame.KEYDOWN:
-		if event.key == pygame.K_w:
+    event = pygame.event.poll()
+    if event.type == pygame.QUIT:
+        print("Ending program")
+        done = True
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_w:
             forwardled.on()
-			print("w pressed")
-		if event.key == pygame.K_a:
+            print("w pressed")
+        if event.key == pygame.K_a:
             leftled.on()
-			print("a pressed")
-		if event.key == pygame.K_s:
+            print("a pressed")
+        if event.key == pygame.K_s:
             reverseled.on()
-			print("s pressed")
-		if event.key == pygame.K_d:
+            print("s pressed")
+        if event.key == pygame.K_d:
             rightled.on()
-			print("d pressed")
+            print("d pressed")
 
     if event.type == pygame.KEYUP:
         if event.key == pygame.K_w:
@@ -45,7 +46,7 @@ while not done:
         if event.key == pygame.K_d:
             rightled.off()
             print("d released")
-	
+    
 
-	pygame.display.flip()
-	pygame.event.pump()
+    pygame.display.flip()
+    pygame.event.pump()
