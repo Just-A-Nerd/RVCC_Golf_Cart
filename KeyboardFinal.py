@@ -1,62 +1,61 @@
-from gpiozero import LED
-from gpiozero import Motor
-import RPi.GPIO as GPIO
-from time import sleep
-import getch
-import time
+from gpiozero import PWMLED
+import pygame
+from pygame.locals import *
 
-forwardled = LED(3)
-leftled = LED(4)
-reverseled = LED(14)
-rightled = LED(15)
-headlights = LED(17)
-taillights = LED(18)
-motor1 = Motor(22,5)
+forwardLed = PWMLED(3)
+forwardVoltage = 0
 
-servoPIN = 14
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(servoPIN, GPIO.OUT)
+leftLed = PWMLED(4)
+leftVoltage = 0
 
-p = GPIO.PWM(14, 50) # GPIO 14 for PWM with 50HZ
-p.start(7.5) # Initialization
+reverseLed = PWMLED(14)
+reverseVoltage = 0
 
-print('Please press a key to see its value')
-while 1:
-    
-        headlights.on()
-        taillights.on()
-        key = getch.getch()
-        if key == 'w':
-            forwardled.on()
-            sleep(1)
-            forwardled.off()
-            motor1.forward(1)
-            print('Forward')
-        if key == 'a':
-            leftled.on()
-            sleep(1)
-            leftled.off()
-            p.ChangeDutyCycle(12.5)
-            print('Left')
-        if key == 's':
-            reverseled.on()
-            sleep(1)
-            reverseled.off()
-            motor1.stop()
-            print('Reverse')
-        if key == 'd':
-            rightled.on()
-            sleep(1)
-            rightled.off()
-            p.ChangeDutyCycle(2.5)
-            print('Right')
-        if key == 'h':
-            headlights.on()
-            sleep(1)
-            headlights.off()
-        if key == 't':
-            taillights.on()
-            sleep(1)
-            taillights.off()
-            
-GPIO.cleanup()
+rightLed = PWMLED(15)
+rightVoltage = 0
+
+screen = pygame.display.set_mode((400, 300))
+
+done = False
+
+while not done:
+    event = pygame.event.poll()
+    if event.type == pygame.QUIT:
+        print("Ending program")
+        done = True
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_w:
+            forwardLed.on()
+
+            if forwardVoltage > 1:
+                forwardVoltage = 1
+
+            forwardLed.value = forwardVoltage
+            print("w pressed")
+        if event.key == pygame.K_a:
+            leftLed.on()
+            print("a pressed")
+        if event.key == pygame.K_s:
+            forwardLed.off()
+            reverseLed.on()
+            print("s pressed")
+        if event.key == pygame.K_d:
+            rightLed.on()
+            print("d pressed")
+
+    if event.type == pygame.KEYUP:
+        if event.key == pygame.K_w:
+            forwardLed.off()
+            print("w released")
+        if event.key == pygame.K_a:
+            leftLed.off()
+            print("a released")
+        if event.key == pygame.K_s:
+            reverseLed.off()
+            print("s released")
+        if event.key == pygame.K_d:
+            rightLed.off()
+            print("d released")
+
+    pygame.display.flip()
+    pygame.event.pump()
