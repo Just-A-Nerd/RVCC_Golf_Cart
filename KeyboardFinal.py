@@ -26,6 +26,9 @@ while not done:
     if event.type == pygame.QUIT:
         print("Ending program")
         done = True
+    if event.type == pygame.KEYUP:
+        if event.key == pygame.K_w:
+            forwardLed.off()
     else:
         keys = pygame.key.get_pressed()
         
