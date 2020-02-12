@@ -26,7 +26,7 @@ while not done:
     if event.type == pygame.QUIT:
         print("Ending program")
         done = True
-    if event.type == pygame.KEYUP:
+    elif event.type == pygame.KEYUP:
         if event.key == pygame.K_w:
             forwardLed.off()
         if event.key == pygame.K_a:
