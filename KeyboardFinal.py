@@ -29,9 +29,15 @@ while not done:
     if event.type == pygame.KEYUP:
         if event.key == pygame.K_w:
             forwardLed.off()
+        if event.key == pygame.K_a:
+            leftLed.off()
+        if event.key == pygame.K_s:
+            reverseLed.off()
+        if event.key == pygame.K_d:
+            rightLed.off()
     else:
         keys = pygame.key.get_pressed()
-        
+
         if keys[pygame.K_w]:
             forwardVoltage += increment
             if forwardVoltage > 1:
@@ -41,7 +47,7 @@ while not done:
             reverseLed.off()
             forwardLed.value = forwardVoltage
             print("w pressed")
-            
+
         if keys[pygame.K_s]:
             reverseVoltage += increment
             if reverseVoltage > 1:
@@ -51,7 +57,7 @@ while not done:
             forwardLed.off()
             reverseLed.value = reverseVoltage
             print("s pressed")
-            
+
         if keys[pygame.K_a]:
             leftVoltage += increment
             if leftVoltage > 1:
@@ -61,7 +67,7 @@ while not done:
             rightLed.off()
             leftLed.value = leftVoltage
             print("a pressed")
-            
+
         if keys[pygame.K_d]:
             rightVoltage += increment
             if rightVoltage > 1:
