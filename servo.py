@@ -1,19 +1,23 @@
-import RPi.GPIO as GPIO
+from gpiozero import PWMLED
 import time #import sleep
 
-servoPIN = 14
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(servoPIN, GPIO.OUT)
+servoPin = 14
+#GPIO.setmode(GPIO.BCM)
+#GPIO.setup(servoPIN, GPIO.OUT)
 
-p = GPIO.PWM(14, 50) # GPIO 14 for PWM with 50HZ
-p.start(7.5) # Initialization
+voltage = 0
+led = PWMLED(servoPin)
+
+
+#p = GPIO.PWM(14, 50) # GPIO 14 for PWM with 50HZ
+#p.start(voltage) # Initialization
 try:
     while True:
-        p.ChangeDutyCycle(7.5)
-        time.sleep(1)
-        p.ChangeDutyCycle(12.5)
-        time.sleep(1)
-        p.ChangeDutyCycle(2.5)
+        #p.ChangeDutyCycle(voltage)
+        led.on()
+        led.value = voltage
+        voltage += 0.01
+        print(led.value)
         time.sleep(1)
         
 except KeyboardInterrupt:
