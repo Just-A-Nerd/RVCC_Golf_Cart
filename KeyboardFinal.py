@@ -26,6 +26,7 @@ while not done:
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_w:
             forwardLed.on()
+            forwardVoltage += 0.1
             if forwardVoltage > 1:
                 forwardVoltage = 1
 
@@ -34,6 +35,7 @@ while not done:
         if event.key == pygame.K_a:
             leftLed.on()
             rightLed.off()
+            leftVoltage += 0.1
             if leftVoltage > 1:
                 leftVoltage = 1
 
