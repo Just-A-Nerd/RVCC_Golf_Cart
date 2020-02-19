@@ -1,25 +1,12 @@
-from gpiozero import PWMLED
-import time #import sleep
+from gpiozero import Servo
+from time import sleep
 
-servoPin = 14
-#GPIO.setmode(GPIO.BCM)
-#GPIO.setup(servoPIN, GPIO.OUT)
+servo = Servo(17)
 
-voltage = 0
-led = PWMLED(servoPin)
-
-
-#p = GPIO.PWM(14, 50) # GPIO 14 for PWM with 50HZ
-#p.start(voltage) # Initialization
-try:
-    while True:
-        #p.ChangeDutyCycle(voltage)
-        led.on()
-        led.value = voltage
-        voltage += 0.01
-        print(led.value)
-        time.sleep(1)
-        
-except KeyboardInterrupt:
-    p.stop()
-    GPIO.cleanup()
+while True:
+    servo.min()
+    sleep(1)
+    servo.mid()
+    sleep(1)
+    servo.max()
+    sleep(1)
